@@ -1,0 +1,8 @@
+{
+  "name": "Fluid Synesthesia Engine",
+  "description": "An AI-powered fluid visualization engine. Describe a feeling or scene, and the liquid simulation dynamically morphs its physics and aesthetics to match the mood.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
