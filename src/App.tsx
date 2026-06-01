@@ -174,6 +174,25 @@ export default function App() {
                             </button>
                         ))}
                       </div>
+
+                      <div className="flex gap-2 items-center pointer-events-auto mt-2 flex-wrap justify-center">
+                         {['Liquid Gold', 'Cosmic', 'Neon', 'Ocean', 'Volcanic', 'Cyberpunk', 'Rainbow'].map((palette) => (
+                            <button 
+                                key={palette}
+                                onClick={() => {
+                                    if (fluidApi.current) {
+                                        fluidApi.current.updateConfig({ COLOR_PALETTE: palette });
+                                        fluidApi.current.multipleSplats(5);
+                                    }
+                                }}
+                                className={`text-xs px-3 py-1 rounded-md border border-white/20 hover:border-white/50 backdrop-blur-md transition-colors ${
+                                    theme === 'light' ? 'bg-black/5 text-gray-800 border-black/10' : 'bg-white/5 text-white'
+                                }`}
+                            >
+                                {palette}
+                            </button>
+                         ))}
+                      </div>
                   </div>
               </motion.div>
           )}

@@ -51,7 +51,7 @@ export function initFluid(canvas: HTMLCanvasElement, onReady?: (api: any) => voi
         CAUSTICS: true,
         REFLECT_INTENSITY: 0.8,
         LIGHT_ANGLE: 0.5,
-        GOLD_TYPE: '24k Gold',
+        COLOR_PALETTE: 'Liquid Gold',
     };
 
     function pointerPrototype() {
@@ -208,11 +208,11 @@ export function initFluid(canvas: HTMLCanvasElement, onReady?: (api: any) => voi
         window.demoConfigSelectionControl = demoFolder.add(config, 'DEMO_CONFIG_SELECTED', configOptions).name('selected config').onFinishChange(loadSelectedDemoConfig);
         demoFolder.add(config, 'DEMO_CONFIG_SHOW_NAME').name('show config name on load');
 
-        let goldFolder = gui.addFolder('Liquid Gold Effects');
-        goldFolder.add(config, 'GOLD_TYPE', ['24k Gold', 'Rose Gold', 'White Gold']).name('gold type');
-        goldFolder.add(config, 'CAUSTICS').name('caustics effect').onFinishChange(updateKeywords);
-        goldFolder.add(config, 'REFLECT_INTENSITY', 0.0, 2.0).name('reflection intensity');
-        goldFolder.add(config, 'LIGHT_ANGLE', 0.0, 1.0).name('light rotation').step(0.01);
+        let paletteFolder = gui.addFolder('Color Palette');
+        paletteFolder.add(config, 'COLOR_PALETTE', ['Liquid Gold', 'Rose Gold', 'White Gold', 'Cosmic', 'Neon', 'Ocean', 'Volcanic', 'Cyberpunk', 'Rainbow']).name('Palette');
+        paletteFolder.add(config, 'CAUSTICS').name('caustics effect').onFinishChange(updateKeywords);
+        paletteFolder.add(config, 'REFLECT_INTENSITY', 0.0, 2.0).name('reflection intensity');
+        paletteFolder.add(config, 'LIGHT_ANGLE', 0.0, 1.0).name('light rotation').step(0.01);
 
         let audioFolder = gui.addFolder('Audio');
         audioFolder.add(config, 'AUDIO_ENABLED').name('enabled').onFinishChange(() => {
@@ -1316,26 +1316,54 @@ export function initFluid(canvas: HTMLCanvasElement, onReady?: (api: any) => voi
         return delta;
     }
     function generateColor() {
-        let hue, sat, rMult, gMult, bMult;
+        let hue = 0, sat = 1, rMult = 1, gMult = 1, bMult = 1;
 
-        switch (config.GOLD_TYPE) {
+        switch (config.COLOR_PALETTE) {
             case 'Rose Gold':
-                // Pinkish-red hue (~0.0 to 0.05)
                 hue = 0.0 + Math.random() * 0.05;
                 sat = Math.random() > 0.9 ? 0.3 : 0.6;
                 rMult = 0.3; gMult = 0.16; bMult = 0.14;
                 break;
             case 'White Gold':
-                // Highly desaturated yellow/gray (~0.10 to 0.15)
                 hue = 0.10 + Math.random() * 0.05;
                 sat = Math.random() > 0.9 ? 0.05 : 0.15;
                 rMult = 0.25; gMult = 0.25; bMult = 0.26;
                 break;
-            case '24k Gold':
+            case 'Cosmic':
+                hue = 0.7 + Math.random() * 0.2; // deep purples to pinks
+                sat = Math.random() > 0.8 ? 0.8 : 1.0;
+                rMult = 0.4; gMult = 0.1; bMult = 0.5;
+                break;
+            case 'Neon':
+                hue = 0.4 + Math.random() * 0.5; // cyan to magenta
+                sat = 1.0;
+                rMult = 0.5; gMult = 1.0; bMult = 1.0;
+                break;
+            case 'Ocean':
+                hue = 0.5 + Math.random() * 0.15; // blues and teals
+                sat = 0.8 + Math.random() * 0.2;
+                rMult = 0.1; gMult = 0.4; bMult = 0.5;
+                break;
+            case 'Volcanic':
+                hue = 0.0 + Math.random() * 0.1; // reds and oranges
+                sat = 0.9 + Math.random() * 0.1;
+                rMult = 0.6; gMult = 0.2; bMult = 0.05;
+                break;
+            case 'Cyberpunk':
+                hue = Math.random() > 0.5 ? 0.8 : 0.5; // stark magenta or cyan
+                sat = 1.0;
+                rMult = 0.5; gMult = 0.5; bMult = 0.5;
+                break;
+            case 'Rainbow':
+                hue = Math.random();
+                sat = 1.0;
+                rMult = Math.random() * 0.3 + 0.2; 
+                gMult = Math.random() * 0.3 + 0.2; 
+                bMult = Math.random() * 0.3 + 0.2;
+                break;
+            case 'Liquid Gold':
             default:
-                // Golden hues: ~35 to ~55 degrees (0.09 to 0.15 in HSV)
                 hue = 0.09 + Math.random() * 0.06;
-                // Keep saturation high, with occasional brighter white/yellow streaks
                 sat = Math.random() > 0.9 ? 0.4 : 1.0;
                 rMult = 0.3; gMult = 0.25; bMult = 0.1;
                 break;

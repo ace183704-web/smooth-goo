@@ -40,7 +40,7 @@ The output JSON MUST follow this EXACT format and have these exact keys without 
   "BLOOM_INTENSITY": <float between 0.1 and 2.5>,
   "SUNRAYS_WEIGHT": <float between 0.3 and 1.5>,
   "CAUSTICS": <boolean>,
-  "GOLD_TYPE": <"24k Gold" | "Rose Gold" | "White Gold">,
+  "COLOR_PALETTE": <"Liquid Gold" | "Rose Gold" | "White Gold" | "Cosmic" | "Neon" | "Ocean" | "Volcanic" | "Cyberpunk" | "Rainbow">,
   "UI_THEME": <"dark" | "light" | "neon" | "minimal">
 }
 
